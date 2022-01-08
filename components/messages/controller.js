@@ -19,9 +19,9 @@ addMessage = (user, message) => {
     
 }
 
-getMessages = () => {
+getMessages = (filterUser) => {
     return new Promise((resolve, reject) => {
-        resolve(store.list())
+        resolve(store.list(filterUser))
     })
 }
 
@@ -37,8 +37,24 @@ updateMessage = (id, message) => {
     })
 }
 
+deleteMessage = (id) => {
+    return new Promise((resolve, reject) => {
+        if(!id){
+            return reject('Invalid Id')
+        }
+        store.remove(id)
+        .then(() => {
+            resolve()
+        })
+        .catch( e => {
+            reject(e)
+        })
+    })
+}
+
 module.exports = {
     addMessage,
     getMessages,
-    updateMessage
+    updateMessage,
+    deleteMessage
 }
